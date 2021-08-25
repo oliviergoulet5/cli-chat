@@ -11,10 +11,10 @@ class ServerNode:
         self.node.listen(5)
         self.connection, addr = self.node.accept()
     
-    def send_sms(self, SMS):
-        self.connection.send(SMS.encode())
+    def send_msg(self, msg):
+        self.connection.send(msg.encode())
     
-    def receive_sms(self):
+    def receive_msg(self):
         while True:
             data = self.connection.recv(1024).decode()
             print(data)
@@ -24,10 +24,10 @@ class ServerNode:
         termcolor.cprint("Chat session has started.", "green")
         while True:
             message = input()
-            self.send_sms(message)
+            self.send_msg(message)
 
 server = ServerNode()
-always_receive = threading.Thread(target = server.receive_sms)
+always_receive = threading.Thread(target = server.receive_msg)
 always_receive.daemon = True
 always_receive.start()
 server.main()

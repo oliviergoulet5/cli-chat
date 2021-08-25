@@ -11,10 +11,10 @@ class ClientNode:
         port_and_ip = ('127.0.0.1', 12345)
         self.node.connect(port_and_ip)
 
-    def send_sms(self, SMS):
-        self.node.send(SMS.encode())
+    def send_msg(self, msg):
+        self.node.send(msg.encode())
     
-    def receive_sms(self):
+    def receive_msg(self):
         while True:
             data = self.node.recv(1024).decode()
             print(data)
@@ -51,10 +51,10 @@ class ClientNode:
 
         while True:
             message = input()
-            self.send_sms(message)
+            self.send_msg(message)
 
 Client = ClientNode()
-always_receive = threading.Thread(target=Client.receive_sms)
+always_receive = threading.Thread(target=Client.receive_msg)
 always_receive.daemon = True
 always_receive.start()
 Client.main()
