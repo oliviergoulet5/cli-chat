@@ -1,7 +1,6 @@
 import socket
 import threading
 import termcolor
-import json
 
 class ServerNode:
     def __init__(self):
@@ -20,14 +19,20 @@ class ServerNode:
             print(data)
 
 
-    def main(self):
+    def run(self):
         termcolor.cprint("Chat session has started.", "green")
         while True:
             message = input()
             self.send_msg(message)
 
-server = ServerNode()
-always_receive = threading.Thread(target = server.receive_msg)
-always_receive.daemon = True
-always_receive.start()
-server.main()
+
+
+def main():
+    server = ServerNode()
+    always_receive = threading.Thread(target = server.receive_msg)
+    always_receive.daemon = True
+    always_receive.start()
+    server.run()
+
+if __name__ == '__main__':
+    main()
